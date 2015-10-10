@@ -20,10 +20,12 @@ public class WorldUtils {
     public static Body createGround(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(new Vector2(Constants.GROUND_X, Constants.GROUND_Y));
+        bodyDef.type = BodyDef.BodyType.KinematicBody;
         Body body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(Constants.GROUND_WIDTH / 2, Constants.GROUND_HEIGHT / 2);
-        body.createFixture(shape, Constants.GROUND_DENSITY);
+        body.createFixture(shape, Constants.GROUND_DENSITY).setFriction(0f);
+        body.setLinearVelocity(Constants.GROUND_SPEED);
         body.setUserData(new GroundUserData());
         shape.dispose();
         return body;
