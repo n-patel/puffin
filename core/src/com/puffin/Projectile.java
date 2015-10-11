@@ -6,11 +6,13 @@ public class Projectile extends GameActor {
 
     public Vector2 linear_velocity;
     Runner runner;
-    public Projectile(Body body, Runner runner) {
+    Vector2 vectorTouch;
+    public Projectile(Body body, float x, float y, Runner runner) {
 
         super(body);
         this.runner = runner;
-        linear_velocity = ProjectileUserData.calculateDir(this);
+        this.vectorTouch = new Vector2(x, y);
+        linear_velocity = ProjectileUserData.calculateDir(this, vectorTouch);
     }
 
     @Override
