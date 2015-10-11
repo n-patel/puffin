@@ -71,7 +71,7 @@ public class GameStage extends Stage implements ContactListener{
         world.setContactListener(this);
         setUpGround();
         setUpRunner();
-        //projs = new ArrayList<Projectile>();
+        projs = new ArrayList<Projectile>();
     }
 
     /**
@@ -79,7 +79,7 @@ public class GameStage extends Stage implements ContactListener{
      * Adds ground field to actor list
      */
     private void setUpGround() {
-        testGround();
+        //testGround();
         grounds = new ArrayList<Ground>();
         map = new Maps();
         for(int i = 0; i < 10; i ++) {
@@ -159,12 +159,12 @@ public class GameStage extends Stage implements ContactListener{
 
     private void setUpProjectile(float x, float y) {
          if(accumulate-accumulate2>=Constants.FIRE_DELAY) {
-            Projectile projectile = new Projectile(WorldUtils.createProjectile(world, runner), x, y, runner);
-            addActor(projectile);
-            projectile.getBody().setLinearVelocity(projectile.linear_velocity.scl(com.puffin.util.Constants.PROJECTILE_SPEED));
-            accumulate2 = accumulate;
+             Projectile projectile = new Projectile(WorldUtils.createProjectile(world, runner), x, y, runner);
+             addActor(projectile);
+             projectile.getBody().setLinearVelocity(projectile.linear_velocity.scl(com.puffin.util.Constants.PROJECTILE_SPEED));
+             accumulate2 = accumulate;
 
-            //projs.add(projectile);
+             projs.add(projectile);
         }
 
     }
@@ -205,12 +205,11 @@ public class GameStage extends Stage implements ContactListener{
     @Override
     public void draw() {
         super.draw();
-        renderer.render(world, camera.combined);
 
         sb.begin();
 
         //draw background
-        //sb.draw(background, 0, 0);
+        sb.draw(background, 0, 0);
 
         //sb.draw(runner.getUserData().getTexture(), runner.getPosition().x, runner.getPosition().y, 300, 300);
         Sprite runnerSprite = runner.getUserData().getSprite(runner.isJumping());
@@ -222,16 +221,17 @@ public class GameStage extends Stage implements ContactListener{
         runnerSprite.setSize(200, 200);
         runnerSprite.draw(sb);
 
-//        for (Projectile p: projs) {
-//            Sprite projSprite = p.getUserData().getSprite();
-//            projSprite.setPosition(p.getPosition().x / Constants.VIEWPORT_WIDTH * Gdx.graphics.getWidth() - p.getWidth() / 2,
-//                    (p.getPosition().y - Constants.PROJECTILE_HEIGHT / 2) / Constants.VIEWPORT_HEIGHT * Gdx.graphics.getHeight());
-//            projSprite.setSize(25, 25);
-//            projSprite.draw(sb);
-//        }
+        for (Projectile p: projs) {
+            Sprite projSprite = p.getUserData().getSprite();
+            projSprite.setPosition((p.getPosition().x - Constants.PROJECTILE_WIDTH) / Constants.VIEWPORT_WIDTH * Gdx.graphics.getWidth() - p.getWidth(),
+                    (p.getPosition().y - Constants.PROJECTILE_HEIGHT) / Constants.VIEWPORT_HEIGHT * Gdx.graphics.getHeight());
+            projSprite.setSize(60, 60);
+            projSprite.draw(sb);
+        }
 
 
         sb.end();
+        renderer.render(world, camera.combined);
     }
 
     /**
