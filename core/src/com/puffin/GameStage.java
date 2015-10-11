@@ -10,6 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.puffin.WorldUtils;
 import com.puffin.BodyUtils;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * Controls all functionality related to the stage of the game
  */
@@ -17,7 +20,8 @@ import com.puffin.BodyUtils;
 public class GameStage extends Stage implements ContactListener{
 
     private World world;
-    private Ground[] grounds;
+    private Queue<Ground> grounds;
+    private Maps map;
     private Runner runner; //the puffin
     private final float TIME_STEP = 1 / 300f;
     private float accumulator = 0f;
@@ -59,18 +63,26 @@ public class GameStage extends Stage implements ContactListener{
      * Adds ground field to actor list
      */
     private void setUpGround() {
-        grounds = new Ground[Maps.platforms.length];
-
-        for(int i = 0; i < Maps.platforms.length; i++) {
-            Ground ground = new Ground(Maps.platforms[i].createPlatform(world));
+        grounds = new LinkedList<Ground>();
+        map = new Maps();
+        for(int i = 0; i < 3; i ++) {
+            Ground ground = new Ground(map.next().createPlatform(world));
             addActor(ground);
-            grounds[i] = ground;
+            grounds.add(ground);
         }
     }
     /**
      * Adds new ground
      */
     private void updateGround(){
+        if(isActorOffScreen(grounds.peek())) {
+            grounds.remove().remove();
+            Ground ground = new Ground(map.next().createPlatform(world));
+            addActor(ground);
+            grounds.add(ground);
+        }
+
+        /*
         if (grounds[1].body.getPosition().x < -Constants.GROUND_WIDTH) {
             for (int i = 0; i < grounds.length - 1; i++) {
                 grounds[i] = grounds[i + 1];
@@ -91,7 +103,16 @@ public class GameStage extends Stage implements ContactListener{
             if(windowCoordinates.x + actor.getWidth() < 0)
                 actor.remove();
         }
+        */
     }
+
+    private boolean isActorOffScreen(GameActor actor) {
+        return actor.getPosition().x + actor.getWidth() / 2 < 0;
+//        Vector3 windowCoordinates = new Vector3(actor.getX(), actor.getY(), 0);
+//        camera.project(windowCoordinates);
+//        return windowCoordinates.x + actor.getWidth() < 0;
+    }
+
     /**
      * Sets runner field to new body with fields specified in WorldUtils file.
      * Adds runner field to actor list
