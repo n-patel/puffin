@@ -16,11 +16,15 @@ public class WorldUtils {
     public static World createWorld() {
         return new World(Constants.WORLD_GRAVITY, true);
     }
+<<<<<<< HEAD
 
 <<<<<<< HEAD
     /*
 =======
 >>>>>>> Implemented createProjectile
+=======
+/*
+>>>>>>> Programmatically generate platforms
     public static Body createGround(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(new Vector2(Constants.GROUND_X, Constants.GROUND_Y));
@@ -35,7 +39,7 @@ public class WorldUtils {
         return body;
     }
     */
-
+    
     public static Body createRunner(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
