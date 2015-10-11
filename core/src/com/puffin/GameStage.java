@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.puffin.WorldUtils;
@@ -13,6 +12,7 @@ import com.puffin.BodyUtils;
 /**
  * Controls all functionality related to the stage of the game
  */
+
 public class GameStage extends Stage implements ContactListener{
     private static final int VIEWPORT_WIDTH  = 20;
     private static final int VIEWPORT_HEIGHT = 13;
@@ -27,6 +27,8 @@ public class GameStage extends Stage implements ContactListener{
     private Box2DDebugRenderer renderer;
 
     private Rectangle screenLeftSide;
+    private Rectangle screenRightSide;
+
     private Vector3 touchPoint;
 
     public GameStage() {
@@ -68,6 +70,12 @@ public class GameStage extends Stage implements ContactListener{
         addActor(runner);
     }
 
+    private void setUpProjectile() {
+        Projectile projectile = new Projectile(WorldUtils.createProjectile(world, runner), runner);
+        addActor(projectile);
+        projectile.body.setLinearVelocity(projectile.linear_velocity.scl(Constants.PROJECTILE_SPEED));
+    }
+
     /**
      * Sets up new Orthographic camera and updates
      */
@@ -80,6 +88,7 @@ public class GameStage extends Stage implements ContactListener{
     private void setupTouchControlAreas() {
         touchPoint = new Vector3();
         screenLeftSide = new Rectangle(0, 0, getCamera().viewportWidth / 2, getCamera().viewportHeight);
+        screenRightSide = new Rectangle(getCamera().viewportWidth/2, 0, getCamera().viewportWidth/2, getCamera().viewportHeight);
         Gdx.input.setInputProcessor(this);
     }
 
@@ -124,13 +133,18 @@ public class GameStage extends Stage implements ContactListener{
             runner.jump();
         }
 
+
+        if (rightSideTouched(touchPoint.x, touchPoint.y))
+        {
+            setUpProjectile();
+        }
         return super.touchDown(x, y, pointer, button);
     }
 
     private boolean leftSideTouched(float x, float y) {
         return screenLeftSide.contains(x, y);
     }
-
+    private boolean rightSideTouched(float x, float y) {return screenRightSide.contains(x, y); }
     private void translateScreenToWorldCoordinates(int x, int y) {
         getCamera().unproject(touchPoint.set(x, y, 0));
     }
