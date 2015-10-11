@@ -2,14 +2,26 @@ package com.puffin.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.puffin.projectile.Projectile;
+import com.puffin.runner.Runner;
 import com.puffin.util.BodyUtils;
+import com.puffin.util.Constants;
+import com.puffin.util.GameActor;
 import com.puffin.util.WorldUtils;
+
+import java.util.ArrayList;
 
 /**
  * Controls all functionality related to the stage of the game
@@ -18,8 +30,9 @@ import com.puffin.util.WorldUtils;
 public class GameStage extends Stage implements ContactListener{
 
     private World world;
-    private Ground[] grounds;
-    private com.puffin.runner.Runner runner; //the puffin
+    private ArrayList<Ground> grounds;
+    private Maps map;
+    private Runner runner; //the puffin
     private final float TIME_STEP = 1 / 300f;
     private float accumulator = 0f;
 
@@ -28,6 +41,7 @@ public class GameStage extends Stage implements ContactListener{
 
     private OrthographicCamera camera;
     private Box2DDebugRenderer renderer;
+    private SpriteBatch sb;
 
     private Rectangle screenLeftSide;
     private Rectangle screenRightSide;
@@ -39,7 +53,7 @@ public class GameStage extends Stage implements ContactListener{
         setupCamera();
         setupTouchControlAreas();
         renderer = new Box2DDebugRenderer();
-
+        sb = new SpriteBatch();
     }
 
     /**
@@ -60,19 +74,28 @@ public class GameStage extends Stage implements ContactListener{
      * Adds ground field to actor list
      */
     private void setUpGround() {
-        grounds = new Ground[Maps.platforms.length];
-
-        for(int i = 0; i < Maps.platforms.length; i++) {
-            Ground ground = new Ground(Maps.platforms[i].createPlatform(world));
+        grounds = new ArrayList<Ground>();
+        map = new Maps();
+        for(int i = 0; i < 10; i ++) {
+            Ground ground = new Ground(map.next().createPlatform(world));
             addActor(ground);
-            grounds[i] = ground;
+            grounds.add(ground);
         }
     }
     /**
      * Adds new ground
      */
     private void updateGround(){
-        if (grounds[1].getBody().getPosition().x < -com.puffin.util.Constants.GROUND_WIDTH) {
+        if(isActorOffScreen(grounds.get(0))) {
+            grounds.remove(0).remove();
+            //Ground ground = new Ground(map.generateNext(grounds.get(grounds.size()-1)).createPlatform(world));
+            Ground ground = new Ground(map.next().createPlatform(world));
+            addActor(ground);
+            grounds.add(ground);
+        }
+
+        /*
+        if (grounds[1].body.getPosition().x < -Constants.GROUND_WIDTH) {
             for (int i = 0; i < grounds.length - 1; i++) {
                 grounds[i] = grounds[i + 1];
                 Maps.platforms[i] = Maps.platforms[i + 1];
@@ -92,7 +115,16 @@ public class GameStage extends Stage implements ContactListener{
             if(windowCoordinates.x + actor.getWidth() < 0)
                 actor.remove();
         }
+        */
     }
+
+    private boolean isActorOffScreen(GameActor actor) {
+        return actor.getPosition().x + actor.getWidth() / 2 < 0;
+//        Vector3 windowCoordinates = new Vector3(actor.getX(), actor.getY(), 0);
+//        camera.project(windowCoordinates);
+//        return windowCoordinates.x + actor.getWidth() < 0;
+    }
+
     /**
      * Sets runner field to new body with fields specified in WorldUtils file.
      * Adds runner field to actor list
@@ -150,6 +182,17 @@ public class GameStage extends Stage implements ContactListener{
     public void draw() {
         super.draw();
         renderer.render(world, camera.combined);
+
+        sb.begin();
+        //sb.draw(runner.getUserData().getTexture(), runner.getPosition().x, runner.getPosition().y, 300, 300);
+        Sprite runnerSprite = runner.getUserData().getSprite();
+        runnerSprite.setPosition(runner.getPosition().x / Constants.VIEWPORT_WIDTH * Gdx.graphics.getWidth() - runnerSprite.getWidth() / 2,
+                (runner.getPosition().y - Constants.RUNNER_HEIGHT / 2) / Constants.VIEWPORT_HEIGHT * Gdx.graphics.getHeight());
+        //runnerSprite.setOrigin(runnerSprite.getX(), runnerSprite.getY());
+        //runnerSprite.setScale(.5f, .5f);
+        runnerSprite.setSize(200, 200);
+        runnerSprite.draw(sb);
+        sb.end();
     }
 
     /**
