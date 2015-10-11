@@ -2,6 +2,7 @@ package com.puffin.world;
 
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.puffin.util.Constants;
 
@@ -16,8 +17,8 @@ public class Maps {
         n = 0;
     }
 
-    public Platform next() {
-        return new Platform(1, .15f, n++ * 1.15f);
+    public Ground next(World world) {
+        return new Ground(world, (1 / 2) * Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT* .15f, n++ * 1.15f*Constants.VIEWPORT_WIDTH);
     }
 
     /**
@@ -31,7 +32,7 @@ public class Maps {
      *
      */
 
-    public Platform generateNext(Ground ground) {
+    public Ground generateNext(World world, Ground ground) {
         float x_min_delta =  Constants.MINIMUM_GAP;
         float y_min_delta = Constants.GROUND_HEIGHT - ground.getHeight();
         float mass = Constants.RUNNER_DENSITY*Constants.RUNNER_HEIGHT*Constants.RUNNER_WIDTH;
@@ -48,7 +49,7 @@ public class Maps {
         float height  = ground.getHeight()+y_delta;
         float xPos = ground.getPosition().x+ ground.getWidth()* Constants.VIEWPORT_WIDTH+ x_delta;
 
-        return new Platform(1, height, xPos);
+        return new Ground(world, Constants.GROUND_WIDTH /2 , height, xPos);
 
 
 
