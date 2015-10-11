@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.puffin.GameScreen;
@@ -17,6 +18,8 @@ public class MainMenu implements Screen {
     private Game game;
     private SpriteBatch spriteBatch;
     private Sprite splashScreen;
+    private Sprite wasted;
+    private BitmapFont font;
 
     public MainMenu(Game game) {
         this.game = game;
@@ -25,7 +28,9 @@ public class MainMenu implements Screen {
     @Override
     public void show() {
         spriteBatch = new SpriteBatch();
+        font = new BitmapFont();
         splashScreen = new Sprite(new Texture("background1.png"));
+        wasted = new Sprite(new Texture("wasted.gif"));
     }
 
     @Override
@@ -33,7 +38,10 @@ public class MainMenu implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
         splashScreen.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        splashScreen.draw(spriteBatch);;
+        splashScreen.draw(spriteBatch);
+        //wasted.draw(spriteBatch);
+        font.draw(spriteBatch, "Dank Puffin Game", Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 4);
+        font.getData().setScale(5, 5);
         spriteBatch.end();
 
         if (Gdx.input.justTouched()) {
