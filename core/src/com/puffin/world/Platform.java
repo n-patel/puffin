@@ -15,10 +15,10 @@ public class Platform {
     public float height;
     public float xPos;
 
-    public Platform(float width, float xPos){
-        this.width = width / 2 * Constants.VIEWPORT_WIDTH;
-        this.height = Constants.GROUND_HEIGHT;
-        this.xPos = xPos * Constants.VIEWPORT_WIDTH;
+    public Platform(float width, float height, float xPos){
+        this.width  = width / 2 * Constants.VIEWPORT_WIDTH;
+        this.height = height * Constants.VIEWPORT_HEIGHT;
+        this.xPos   = xPos * Constants.VIEWPORT_WIDTH;
     }
 
     /**
