@@ -13,20 +13,16 @@ import com.puffin.RunnerUserData;
 
 public class WorldUtils {
 
-    /**
-     * Creates a World, which is the entire screen
-     * @return World a World with gravity set to value in Constants file
-     */
     public static World createWorld() {
         return new World(Constants.WORLD_GRAVITY, true);
     }
-/*
+
+    /*
     public static Body createGround(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(new Vector2(Constants.GROUND_X, Constants.GROUND_Y));
         bodyDef.type = BodyDef.BodyType.KinematicBody;
         Body body = world.createBody(bodyDef);
-
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(Constants.GROUND_WIDTH / 2, Constants.GROUND_HEIGHT / 2);
         body.createFixture(shape, Constants.GROUND_DENSITY).setFriction(0f);
@@ -35,19 +31,12 @@ public class WorldUtils {
         shape.dispose();
         return body;
     }
-*/
+    */
 
-    /**
-     * Creates a Runner body on the world passed in. Body is of type DynamicBody,
-     * and has height, width, density, x and y position specified from Constants file
-     * @param world The World on which the body is created
-     * @return Body Runner body
-     */
     public static Body createRunner(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(new Vector2(Constants.RUNNER_X, Constants.RUNNER_Y));
-
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(Constants.RUNNER_WIDTH / 2, Constants.RUNNER_HEIGHT / 2);
         Body body = world.createBody(bodyDef);
@@ -55,6 +44,21 @@ public class WorldUtils {
         body.createFixture(shape, Constants.RUNNER_DENSITY);
         body.resetMassData();
         body.setUserData(new RunnerUserData());
+        shape.dispose();
+        return body;
+    }
+
+    public static Body createProjectile(World world, Runner runner) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.KinematicBody;
+        bodyDef.position.set(new Vector2(runner.body.getPosition()));
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(Constants.PROJECTILE_WIDTH / 2, Constants.PROJECTILE_HEIGHT / 2);
+        Body body = world.createBody(bodyDef);
+        body.setGravityScale(0);
+        body.createFixture(shape, Constants.RUNNER_DENSITY);
+        body.resetMassData();
+        body.setUserData(new ProjectileUserData());
         shape.dispose();
         return body;
     }
