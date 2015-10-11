@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.puffin.WorldUtils;
 import com.puffin.BodyUtils;
 public class GameStage extends Stage implements ContactListener{
-    private static final int VIEWPORT_WIDTH = 20;
+    private static final int VIEWPORT_WIDTH  = 20;
     private static final int VIEWPORT_HEIGHT = 13;
 
     private World world;
@@ -117,8 +117,8 @@ public class GameStage extends Stage implements ContactListener{
                 (BodyUtils.bodyIsGround(a) && BodyUtils.bodyIsRunner(b))) {
             runner.landed();
         }
-
     }
+
     @Override
     public void endContact(Contact contact) {
 
