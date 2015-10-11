@@ -2,6 +2,9 @@ package com.puffin;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
@@ -32,6 +35,7 @@ public class GameStage extends Stage implements ContactListener{
 
     private OrthographicCamera camera;
     private Box2DDebugRenderer renderer;
+    private SpriteBatch sb;
 
     private Rectangle screenLeftSide;
     private Rectangle screenRightSide;
@@ -43,7 +47,7 @@ public class GameStage extends Stage implements ContactListener{
         setupCamera();
         setupTouchControlAreas();
         renderer = new Box2DDebugRenderer();
-
+        sb = new SpriteBatch();
     }
 
     /**
@@ -64,10 +68,10 @@ public class GameStage extends Stage implements ContactListener{
      * Adds ground field to actor list
      */
     private void setUpGround() {
-        grounds = new ArrayList<>();
+        grounds = new ArrayList<Ground>();
         map = new Maps();
-        for(int i = 0; i < 3; i ++) {
-            Ground ground = new Ground(map.generateNext(grounds.get(grounds.size()-1)).createPlatform(world));
+        for(int i = 0; i < 10; i ++) {
+            Ground ground = new Ground(map.next().createPlatform(world));
             addActor(ground);
             grounds.add(ground);
         }
@@ -78,7 +82,8 @@ public class GameStage extends Stage implements ContactListener{
     private void updateGround(){
         if(isActorOffScreen(grounds.get(0))) {
             grounds.remove(0).remove();
-            Ground ground = new Ground(map.generateNext(grounds.get(grounds.size()-1)).createPlatform(world));
+            //Ground ground = new Ground(map.generateNext(grounds.get(grounds.size()-1)).createPlatform(world));
+            Ground ground = new Ground(map.next().createPlatform(world));
             addActor(ground);
             grounds.add(ground);
         }
@@ -171,6 +176,17 @@ public class GameStage extends Stage implements ContactListener{
     public void draw() {
         super.draw();
         renderer.render(world, camera.combined);
+
+        sb.begin();
+        //sb.draw(runner.getUserData().getTexture(), runner.getPosition().x, runner.getPosition().y, 300, 300);
+        Sprite runnerSprite = runner.getUserData().getSprite();
+        runnerSprite.setPosition(runner.getPosition().x / Constants.VIEWPORT_WIDTH * Gdx.graphics.getWidth() - runnerSprite.getWidth() / 2,
+                (runner.getPosition().y - Constants.RUNNER_HEIGHT / 2) / Constants.VIEWPORT_HEIGHT * Gdx.graphics.getHeight());
+        //runnerSprite.setOrigin(runnerSprite.getX(), runnerSprite.getY());
+        //runnerSprite.setScale(.5f, .5f);
+        runnerSprite.setSize(200, 200);
+        runnerSprite.draw(sb);
+        sb.end();
     }
 
     /**

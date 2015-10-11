@@ -15,6 +15,10 @@ public class Maps {
         n = 0;
     }
 
+    public Platform next() {
+        return new Platform(1, .5f, n++ * 1.15f);
+    }
+
     /**
      * input: platform: platform of current glacier, runner\
      * output: height and position of next glacier Vector2
