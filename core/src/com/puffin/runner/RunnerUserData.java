@@ -1,10 +1,11 @@
-package com.puffin;
+package com.puffin.runner;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.puffin.UserDataType;
-import com.puffin.Constants;
+import com.puffin.util.UserData;
+import com.puffin.util.UserDataType;
+import com.puffin.util.Constants;
 
 public class RunnerUserData extends UserData {
 

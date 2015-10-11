@@ -1,4 +1,4 @@
-package com.puffin;
+package com.puffin.util;
 
 /**
  * Created by Lear on 10/10/2015.
@@ -8,8 +8,9 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.puffin.GroundUserData;
-import com.puffin.RunnerUserData;
+import com.puffin.projectile.ProjectileUserData;
+import com.puffin.runner.Runner;
+import com.puffin.runner.RunnerUserData;
 
 public class WorldUtils {
 

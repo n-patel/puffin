@@ -1,4 +1,4 @@
-package com.puffin;
+package com.puffin.util;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -11,6 +11,10 @@ public abstract class GameActor extends Actor {
     public GameActor(Body body) {
         this.body     = body;
         this.userData = (UserData) body.getUserData();
+    }
+
+    public Body getBody() {
+        return body;
     }
 
     public abstract UserData getUserData();

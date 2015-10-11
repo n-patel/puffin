@@ -1,7 +1,7 @@
-package com.puffin;
+package com.puffin.runner;
 
 import com.badlogic.gdx.physics.box2d.Body;
-import com.puffin.RunnerUserData;
+import com.puffin.util.GameActor;
 
 /**
  * Represents the Puffin object. Has fields to check whether puffin is currently

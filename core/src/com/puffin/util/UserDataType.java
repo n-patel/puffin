@@ -1,4 +1,4 @@
-package com.puffin;
+package com.puffin.util;
 
 public enum UserDataType {
 
