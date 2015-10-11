@@ -17,7 +17,7 @@ public class Maps {
     }
 
     public Platform next() {
-        return new Platform(1, .5f, n++ * 1.15f);
+        return new Platform(1, .15f, n++ * 1.15f);
     }
 
     /**

@@ -8,12 +8,19 @@ import com.puffin.util.UserDataType;
 import com.puffin.util.Constants;
 
 public class RunnerUserData extends UserData {
-
     private Vector2 jumpingLinearImpulse;
-    private Sprite[] img = {new Sprite(new Texture("puffin-running-1.png")),
+    private Sprite[] runImg = {
+            new Sprite(new Texture("puffin-running-1.png")),
             new Sprite(new Texture("puffin-running-2.png")),
             new Sprite(new Texture("puffin-running-3.png")),
-            new Sprite(new Texture("puffin-running-4.png"))};
+            new Sprite(new Texture("puffin-running-4.png"))
+    };
+    private Sprite[] flyImg = {
+            new Sprite(new Texture("puffin-flying-1.png")),
+            new Sprite(new Texture("puffin-flying-2.png")),
+            new Sprite(new Texture("puffin-flying-3.png")),
+            new Sprite(new Texture("puffin-flying-2.png"))
+    };
     private int i = 0;
 
     public RunnerUserData() {
@@ -30,8 +37,11 @@ public class RunnerUserData extends UserData {
         this.jumpingLinearImpulse = jumpingLinearImpulse;
     }
 
-    public Sprite getSprite(){
+    public Sprite getSprite(boolean isJumping){
         i++;
-        return img[(i / 10) % img.length];
+        if (isJumping) {
+            return flyImg[(i / 10) % flyImg.length];
+        }
+        return runImg[(i / 10) % runImg.length];
     }
 }

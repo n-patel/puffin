@@ -8,8 +8,6 @@ import com.puffin.util.GameActor;
  * jumping
  */
 public class Runner extends GameActor {
-
-
     private boolean jumping;
 
     /**
@@ -30,12 +28,17 @@ public class Runner extends GameActor {
      *  false, iff jumping field is false (runner is not currently jumping)
      */
     public void jump() {
-
         if (!jumping) {
             body.applyLinearImpulse(getUserData().getJumpingLinearImpulse(), body.getWorldCenter(), true);
             jumping = true;
         }
+    }
 
+    /**
+     * Returns if the runner is jumping or not
+     */
+    public boolean isJumping() {
+        return jumping;
     }
 
     /**

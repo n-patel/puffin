@@ -2,6 +2,7 @@ package com.puffin.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -20,7 +21,6 @@ import com.puffin.util.BodyUtils;
 import com.puffin.util.Constants;
 import com.puffin.util.GameActor;
 import com.puffin.util.WorldUtils;
-
 import java.util.ArrayList;
 
 /**
@@ -31,6 +31,7 @@ public class GameStage extends Stage implements ContactListener{
 
     private World world;
     private ArrayList<Ground> grounds;
+    private ArrayList<Projectile> projs;
     private Maps map;
     private Runner runner; //the puffin
 
@@ -43,6 +44,7 @@ public class GameStage extends Stage implements ContactListener{
     private OrthographicCamera camera;
     private Box2DDebugRenderer renderer;
     private SpriteBatch sb;
+    private Sprite background;
 
     private Rectangle screenLeftSide;
     private Rectangle screenRightSide;
@@ -55,6 +57,7 @@ public class GameStage extends Stage implements ContactListener{
         setupTouchControlAreas();
         renderer = new Box2DDebugRenderer();
         sb = new SpriteBatch();
+        background = new Sprite(new Texture("background1.png"));
     }
 
     /**
@@ -68,6 +71,7 @@ public class GameStage extends Stage implements ContactListener{
         world.setContactListener(this);
         setUpGround();
         setUpRunner();
+        //projs = new ArrayList<Projectile>();
     }
 
     /**
@@ -154,12 +158,13 @@ public class GameStage extends Stage implements ContactListener{
     }
 
     private void setUpProjectile(float x, float y) {
-
-        if(accumulate-accumulate2>= com.puffin.util.Constants.FIRE_DELAY) {
+         if(accumulate-accumulate2>=Constants.FIRE_DELAY) {
             Projectile projectile = new Projectile(WorldUtils.createProjectile(world, runner), x, y, runner);
             addActor(projectile);
             projectile.getBody().setLinearVelocity(projectile.linear_velocity.scl(com.puffin.util.Constants.PROJECTILE_SPEED));
             accumulate2 = accumulate;
+
+            //projs.add(projectile);
         }
 
     }
@@ -203,14 +208,29 @@ public class GameStage extends Stage implements ContactListener{
         renderer.render(world, camera.combined);
 
         sb.begin();
+
+        //draw background
+        //sb.draw(background, 0, 0);
+
         //sb.draw(runner.getUserData().getTexture(), runner.getPosition().x, runner.getPosition().y, 300, 300);
-        Sprite runnerSprite = runner.getUserData().getSprite();
+        Sprite runnerSprite = runner.getUserData().getSprite(runner.isJumping());
         runnerSprite.setPosition(runner.getPosition().x / Constants.VIEWPORT_WIDTH * Gdx.graphics.getWidth() - runnerSprite.getWidth() / 2,
                 (runner.getPosition().y - Constants.RUNNER_HEIGHT / 2) / Constants.VIEWPORT_HEIGHT * Gdx.graphics.getHeight());
+
         //runnerSprite.setOrigin(runnerSprite.getX(), runnerSprite.getY());
         //runnerSprite.setScale(.5f, .5f);
         runnerSprite.setSize(200, 200);
         runnerSprite.draw(sb);
+
+//        for (Projectile p: projs) {
+//            Sprite projSprite = p.getUserData().getSprite();
+//            projSprite.setPosition(p.getPosition().x / Constants.VIEWPORT_WIDTH * Gdx.graphics.getWidth() - p.getWidth() / 2,
+//                    (p.getPosition().y - Constants.PROJECTILE_HEIGHT / 2) / Constants.VIEWPORT_HEIGHT * Gdx.graphics.getHeight());
+//            projSprite.setSize(25, 25);
+//            projSprite.draw(sb);
+//        }
+
+
         sb.end();
     }
 
