@@ -3,6 +3,7 @@ package com.puffin.world;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.puffin.util.Constants;
 
 /**
  * Created by Caleb on 10/10/2015.
