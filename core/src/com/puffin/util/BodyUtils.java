@@ -1,9 +1,8 @@
-package com.puffin;
+package com.puffin.util;
 
 
 import com.badlogic.gdx.physics.box2d.Body;
-import com.puffin.UserData;
-import com.puffin.UserDataType;
+
 public class BodyUtils {
     public static boolean bodyIsRunner(Body body) {
         UserData userData = (UserData) body.getUserData();

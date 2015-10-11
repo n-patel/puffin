@@ -1,4 +1,4 @@
-package com.puffin;
+package com.puffin.world;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -15,9 +15,9 @@ public class Platform {
     public float xPos;
 
     public Platform(float width, float xPos){
-        this.width = width / 2 * Constants.VIEWPORT_WIDTH;
-        this.height = Constants.GROUND_HEIGHT;
-        this.xPos = xPos * Constants.VIEWPORT_WIDTH;
+        this.width = width / 2 * com.puffin.util.Constants.VIEWPORT_WIDTH;
+        this.height = com.puffin.util.Constants.GROUND_HEIGHT;
+        this.xPos = xPos * com.puffin.util.Constants.VIEWPORT_WIDTH;
     }
 
     /**
@@ -28,13 +28,13 @@ public class Platform {
      */
     public Body createPlatform(World world) {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(new Vector2(xPos + width, Constants.GROUND_Y));
+        bodyDef.position.set(new Vector2(xPos + width, com.puffin.util.Constants.GROUND_Y));
         bodyDef.type = BodyDef.BodyType.KinematicBody;
         Body body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(this.width, this.height);
-        body.createFixture(shape, Constants.GROUND_DENSITY).setFriction(0f);
-        body.setLinearVelocity(Constants.GROUND_SPEED);
+        body.createFixture(shape, com.puffin.util.Constants.GROUND_DENSITY).setFriction(0f);
+        body.setLinearVelocity(com.puffin.util.Constants.GROUND_SPEED);
         body.setUserData(new GroundUserData());
         shape.dispose();
         return body;

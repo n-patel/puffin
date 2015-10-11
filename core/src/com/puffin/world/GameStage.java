@@ -1,4 +1,4 @@
-package com.puffin;
+package com.puffin.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -7,8 +7,9 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.puffin.WorldUtils;
-import com.puffin.BodyUtils;
+import com.puffin.projectile.Projectile;
+import com.puffin.util.BodyUtils;
+import com.puffin.util.WorldUtils;
 
 /**
  * Controls all functionality related to the stage of the game
@@ -18,7 +19,7 @@ public class GameStage extends Stage implements ContactListener{
 
     private World world;
     private Ground[] grounds;
-    private Runner runner; //the puffin
+    private com.puffin.runner.Runner runner; //the puffin
     private final float TIME_STEP = 1 / 300f;
     private float accumulator = 0f;
 
@@ -71,7 +72,7 @@ public class GameStage extends Stage implements ContactListener{
      * Adds new ground
      */
     private void updateGround(){
-        if (grounds[1].body.getPosition().x < -Constants.GROUND_WIDTH) {
+        if (grounds[1].getBody().getPosition().x < -com.puffin.util.Constants.GROUND_WIDTH) {
             for (int i = 0; i < grounds.length - 1; i++) {
                 grounds[i] = grounds[i + 1];
                 Maps.platforms[i] = Maps.platforms[i + 1];
@@ -97,16 +98,16 @@ public class GameStage extends Stage implements ContactListener{
      * Adds runner field to actor list
      */
     private void setUpRunner() {
-        runner = new Runner(WorldUtils.createRunner(world));
+        runner = new com.puffin.runner.Runner(WorldUtils.createRunner(world));
         addActor(runner);
     }
 
     private void setUpProjectile(float x, float y) {
 
-        if(accumulate-accumulate2>=Constants.FIRE_DELAY) {
+        if(accumulate-accumulate2>= com.puffin.util.Constants.FIRE_DELAY) {
             Projectile projectile = new Projectile(WorldUtils.createProjectile(world, runner), x, y, runner);
             addActor(projectile);
-            projectile.body.setLinearVelocity(projectile.linear_velocity.scl(Constants.PROJECTILE_SPEED));
+            projectile.getBody().setLinearVelocity(projectile.linear_velocity.scl(com.puffin.util.Constants.PROJECTILE_SPEED));
             accumulate2 = accumulate;
         }
 
@@ -116,7 +117,7 @@ public class GameStage extends Stage implements ContactListener{
      * Sets up new Orthographic camera and updates
      */
     private void setupCamera() {
-        camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
+        camera = new OrthographicCamera(com.puffin.util.Constants.VIEWPORT_WIDTH, com.puffin.util.Constants.VIEWPORT_HEIGHT);
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f);
         camera.update();
     }

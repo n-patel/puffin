@@ -1,4 +1,4 @@
-package com.puffin;
+package com.puffin.world;
 
 /**
  * Created by Caleb on 10/10/2015.

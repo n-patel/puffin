@@ -1,4 +1,4 @@
-package com.puffin;
+package com.puffin.util;
 
 /**
  * Created by Lear on 10/10/2015.
