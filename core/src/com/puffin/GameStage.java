@@ -10,11 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.puffin.WorldUtils;
 import com.puffin.BodyUtils;
 public class GameStage extends Stage implements ContactListener{
-    private static final int VIEWPORT_WIDTH = 20;
-    private static final int VIEWPORT_HEIGHT = 13;
 
     private World world;
-    private Ground ground;
+    private Ground[] grounds;
     private Runner runner; //the puffin
     private final float TIME_STEP = 1 / 300f;
     private float accumulator = 0f;
@@ -41,8 +39,12 @@ public class GameStage extends Stage implements ContactListener{
     }
 
     private void setUpGround() {
-        ground = new Ground(WorldUtils.createGround(world));
-        addActor(ground);
+        grounds = new Ground[Maps.platforms.length];
+        for(int i = 0; i < Maps.platforms.length; i++) {
+            Ground ground = new Ground(Maps.platforms[i].createPlatform(world));
+            addActor(ground);
+            grounds[i] = ground;
+        }
     }
 
     private void setUpRunner() {
@@ -51,7 +53,7 @@ public class GameStage extends Stage implements ContactListener{
     }
 
     private void setupCamera() {
-        camera = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+        camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f);
         camera.update();
     }
