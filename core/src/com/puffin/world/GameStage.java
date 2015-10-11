@@ -81,7 +81,8 @@ public class GameStage extends Stage implements ContactListener{
     private void setUpGround() {
         grounds = new ArrayList<Ground>();
         map = new Maps();
-        //testGround();
+        grounds = new ArrayList<Ground>();
+        map = new Maps();
         for(int i = 0; i < 10; i ++) {
             Ground ground = map.next(world);
             addActor(ground);
@@ -91,22 +92,25 @@ public class GameStage extends Stage implements ContactListener{
     /**
      * Adds new ground
      */
-    private void testGround(){
-        Ground ground = map.next(world);
-        System.out.println("Ground xPos: " + ground.xPos + " Ground Height: " + ground.height + " Ground width: " + ground.width);
 
-        Ground ground2 = map.generateNext(world, ground);
-        System.out.println("Ground2 xPos: " + ground2.xPos + " Ground2 Height: " + ground2.height + " Ground2 width: " + ground2.width);
-
-        for (int i = 0; i < 5; i++) {
-            ground = map.generateNext(world, ground2);
-            System.out.println("Ground xPos: " + ground.xPos + " Ground Height: " + ground.height + " Ground width: " + ground.width);
-            ground2 = map.generateNext(world, ground);
-            System.out.println("Ground2 xPos: " + ground2.xPos + " Ground2 Height: " + ground2.height + " Ground2 width: " + ground2.width);
-        }
-    }
-
-
+//    private void testGround(){
+//        Platform p = map.next();
+//        Ground ground = new Ground(p.createPlatform(world), p.width, p.height);
+//        System.out.println("Ground xPos: " + ground.getBody().getPosition().x + " Ground Height: " + ground.height + " Ground width: " + ground.width);
+//
+//        Platform p2 = map.generateNext(ground);
+//        Ground ground2 = new Ground(p2.createPlatform(world), p2.width, p2.height);
+//        System.out.println("Ground2 xPos: " + ground2.getBody().getPosition().x + " Ground2 Height: " + ground2.height + " Ground2 width: " + ground2.width);
+//
+//        for (int i = 0; i < 5; i++) {
+//            p = map.generateNext(ground2);
+//            ground = new Ground(p.createPlatform(world), p.width, p.height);
+//            System.out.println("Ground xPos: " + ground.getBody().getPosition().x + " Ground Height: " + ground.height + " Ground width: " + ground.width);
+//            p2 = map.generateNext(ground);
+//            ground2 = new Ground(p2.createPlatform(world), p2.width, p2.height);
+//            System.out.println("Ground2 xPos: " + ground2.getBody().getPosition().x + " Ground2 Height: " + ground2.height + " Ground2 width: " + ground2.width);
+//        }
+//    }
 
     private void updateGround(){
         if(isActorOffScreen(grounds.get(0))) {
@@ -227,6 +231,7 @@ public class GameStage extends Stage implements ContactListener{
             projSprite.setPosition((p.getPosition().x - Constants.PROJECTILE_WIDTH) / Constants.VIEWPORT_WIDTH * Gdx.graphics.getWidth() - p.getWidth(),
                     (p.getPosition().y - Constants.PROJECTILE_HEIGHT) / Constants.VIEWPORT_HEIGHT * Gdx.graphics.getHeight());
             projSprite.setSize(60, 60);
+            projSprite.setRotation(p.getRotation() + p.getVectorTouch().angle());
             projSprite.draw(sb);
         }
 
