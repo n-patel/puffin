@@ -32,7 +32,7 @@ public class WorldUtils {
         return body;
     }
     */
-
+    
     public static Body createRunner(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
