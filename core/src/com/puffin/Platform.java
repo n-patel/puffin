@@ -10,13 +10,13 @@ import com.badlogic.gdx.physics.box2d.World;
  * Created by Caleb on 10/10/2015.
  */
 public class Platform {
-    private float width;
-    private float height;
+    public float width;
+    public float height;
     public float xPos;
 
-    public Platform(float width, float xPos){
+    public Platform(float width, float height, float xPos){
         this.width = width / 2 * Constants.VIEWPORT_WIDTH;
-        this.height = Constants.GROUND_HEIGHT;
+        this.height = height / 2 * Constants.VIEWPORT_HEIGHT;
         this.xPos = xPos * Constants.VIEWPORT_WIDTH;
     }
 

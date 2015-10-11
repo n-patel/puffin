@@ -31,4 +31,7 @@ public class Constants {
 
     public static final int VIEWPORT_WIDTH  = 20;
     public static final int VIEWPORT_HEIGHT = 13;
+
+    public static final float MINIMUM_GAP = 1.2f;
+   // public static final float JUMP_OFF_GAP= .4f;
 }

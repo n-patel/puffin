@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.puffin.WorldUtils;
 import com.puffin.BodyUtils;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -23,7 +24,7 @@ import java.util.Queue;
 public class GameStage extends Stage implements ContactListener{
 
     private World world;
-    private Queue<Ground> grounds;
+    private ArrayList<Ground> grounds;
     private Maps map;
     private Runner runner; //the puffin
     private final float TIME_STEP = 1 / 300f;
@@ -67,7 +68,7 @@ public class GameStage extends Stage implements ContactListener{
      * Adds ground field to actor list
      */
     private void setUpGround() {
-        grounds = new LinkedList<Ground>();
+        grounds = new ArrayList<Ground>();
         map = new Maps();
         for(int i = 0; i < 10; i ++) {
             Ground ground = new Ground(map.next().createPlatform(world));
@@ -79,8 +80,9 @@ public class GameStage extends Stage implements ContactListener{
      * Adds new ground
      */
     private void updateGround(){
-        if(isActorOffScreen(grounds.peek())) {
-            grounds.remove().remove();
+        if(isActorOffScreen(grounds.get(0))) {
+            grounds.remove(0).remove();
+            //Ground ground = new Ground(map.generateNext(grounds.get(grounds.size()-1)).createPlatform(world));
             Ground ground = new Ground(map.next().createPlatform(world));
             addActor(ground);
             grounds.add(ground);
