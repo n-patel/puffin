@@ -21,6 +21,9 @@ public class GameStage extends Stage implements ContactListener{
     private final float TIME_STEP = 1 / 300f;
     private float accumulator = 0f;
 
+    private float accumulate = 0f;
+    private float accumulate2 = 0f; // Used to calibrate delay for firing
+
     private OrthographicCamera camera;
     private Box2DDebugRenderer renderer;
 
@@ -73,9 +76,14 @@ public class GameStage extends Stage implements ContactListener{
     }
 
     private void setUpProjectile(float x, float y) {
-        Projectile projectile = new Projectile(WorldUtils.createProjectile(world, runner), x, y, runner);
-        addActor(projectile);
-        projectile.body.setLinearVelocity(projectile.linear_velocity.scl(Constants.PROJECTILE_SPEED));
+
+        if(accumulate-accumulate2>=Constants.FIRE_DELAY) {
+            Projectile projectile = new Projectile(WorldUtils.createProjectile(world, runner), x, y, runner);
+            addActor(projectile);
+            projectile.body.setLinearVelocity(projectile.linear_velocity.scl(Constants.PROJECTILE_SPEED));
+            accumulate2 = accumulate;
+        }
+
     }
 
     /**
@@ -101,7 +109,7 @@ public class GameStage extends Stage implements ContactListener{
 
         // Fixed timestep
         accumulator += delta;
-
+        accumulate += delta;
         while (accumulator >= delta) {
             world.step(TIME_STEP, 6, 2);
             accumulator -= TIME_STEP;
