@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.puffin.projectile.ProjectileUserData;
 import com.puffin.runner.Runner;
 import com.puffin.runner.RunnerUserData;
+import com.puffin.world.GroundUserData;
 
 public class WorldUtils {
 
@@ -18,21 +19,21 @@ public class WorldUtils {
         return new World(Constants.WORLD_GRAVITY, true);
     }
 
-    /*
-    public static Body createGround(World world) {
+
+    public static Body createGround(World world, float width, float height, float xPos) {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(new Vector2(Constants.GROUND_X, Constants.GROUND_Y));
+        bodyDef.position.set(new Vector2(xPos, 0));
         bodyDef.type = BodyDef.BodyType.KinematicBody;
         Body body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(Constants.GROUND_WIDTH / 2, Constants.GROUND_HEIGHT / 2);
+        shape.setAsBox(width, height);
         body.createFixture(shape, Constants.GROUND_DENSITY).setFriction(0f);
         body.setLinearVelocity(Constants.GROUND_SPEED);
         body.setUserData(new GroundUserData());
         shape.dispose();
         return body;
     }
-    */
+
 
     public static Body createRunner(World world) {
         BodyDef bodyDef = new BodyDef();
