@@ -22,11 +22,11 @@ public class WorldUtils {
 
     public static Body createGround(World world, float width, float height, float xPos) {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(new Vector2(xPos, 0));
+        bodyDef.position.set(new Vector2(xPos+width/2f, 0));
         bodyDef.type = BodyDef.BodyType.KinematicBody;
         Body body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width, height);
+        shape.setAsBox(width/2, height/2);
         body.createFixture(shape, Constants.GROUND_DENSITY).setFriction(0f);
         body.setLinearVelocity(Constants.GROUND_SPEED);
         body.setUserData(new GroundUserData());

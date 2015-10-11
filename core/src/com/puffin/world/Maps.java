@@ -18,7 +18,18 @@ public class Maps {
     }
 
     public Ground next(World world) {
-        return new Ground(world, (1 / 2) * Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT* .15f, (n++ * 1.15f -.3f)*Constants.VIEWPORT_WIDTH);
+        if (GameStage.getGrounds().size() ==0) {
+            return new Ground(world, Constants.GROUND_WIDTH, Constants.GROUND_HEIGHT, 0);
+
+
+        }
+        else {
+
+            Ground lastGround = GameStage.getGrounds().get(GameStage.getGrounds().size() - 1);
+            System.out.println(lastGround.xPos);
+
+            return new Ground(world, Constants.GROUND_WIDTH, Constants.GROUND_HEIGHT, lastGround.xPos + lastGround.width + Constants.MINIMUM_GAP);
+        }
     }
 
     /**

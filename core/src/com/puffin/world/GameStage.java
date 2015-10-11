@@ -30,7 +30,7 @@ import java.util.ArrayList;
 public class GameStage extends Stage implements ContactListener{
 
     private World world;
-    private ArrayList<Ground> grounds;
+    private static ArrayList<Ground> grounds;
     private ArrayList<Projectile> projs;
     private Maps map;
     private Runner runner; //the puffin
@@ -299,5 +299,9 @@ public class GameStage extends Stage implements ContactListener{
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
+    }
+
+    public static ArrayList<Ground> getGrounds() {
+        return grounds;
     }
 }
