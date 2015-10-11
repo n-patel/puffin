@@ -13,10 +13,20 @@ import com.puffin.RunnerUserData;
 
 public class WorldUtils {
 
+    /**
+     * Creates a World, which is the entire screen
+     * @return World a World with gravity set to value in Constants file
+     */
     public static World createWorld() {
         return new World(Constants.WORLD_GRAVITY, true);
     }
 
+    /**
+     * Creates a Ground body on the World passed in. Body is of type KinematicBody,
+     * and has density, height, width, x and y coordinates and speed from Constants file
+     * @param world The world on which the body is created
+     * @return Body Ground body
+     */
     public static Body createGround(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(new Vector2(Constants.GROUND_X, Constants.GROUND_Y));
@@ -32,6 +42,12 @@ public class WorldUtils {
         return body;
     }
 
+    /**
+     * Creates a Runner body on the world passed in. Body is of type DynamicBody,
+     * and has height, width, density, x and y position specified from Constants file
+     * @param world The World on which the body is created
+     * @return Body Runner body
+     */
     public static Body createRunner(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
