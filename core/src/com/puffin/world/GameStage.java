@@ -209,7 +209,8 @@ public class GameStage extends Stage implements ContactListener{
         sb.begin();
 
         //draw background
-        sb.draw(background, 0, 0);
+        background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        background.draw(sb);
 
         //sb.draw(runner.getUserData().getTexture(), runner.getPosition().x, runner.getPosition().y, 300, 300);
         Sprite runnerSprite = runner.getUserData().getSprite(runner.isJumping());
