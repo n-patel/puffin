@@ -20,7 +20,6 @@ public class Platform {
         this.xPos = xPos * Constants.VIEWPORT_WIDTH;
     }
 
-
     /**
      * Creates a Ground body on the World passed in. Body is of type KinematicBody,
      * and has density, height, width, x and y coordinates and speed from Constants file
