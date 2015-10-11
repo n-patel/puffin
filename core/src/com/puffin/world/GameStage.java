@@ -75,6 +75,7 @@ public class GameStage extends Stage implements ContactListener{
      * Adds ground field to actor list
      */
     private void setUpGround() {
+        testGround();
         grounds = new ArrayList<Ground>();
         map = new Maps();
         for(int i = 0; i < 10; i ++) {
@@ -86,6 +87,23 @@ public class GameStage extends Stage implements ContactListener{
     /**
      * Adds new ground
      */
+    private void testGround(){
+        Ground ground = new Ground(map.next().createPlatform(world));
+        System.out.println("Ground xPos: " + ground.getPosition().x + "Ground Height: " + ground.getHeight() + "Ground width: " + ground.getWidth());
+
+        Ground ground2 = new Ground(map.generateNext(ground).createPlatform(world));
+        System.out.println("Ground xPos: " + ground2.getPosition().x + "Ground Height: " + ground2.getHeight() + "Ground width: " + ground2.getWidth());
+
+        for (int i = 0; i < 5; i++) {
+            ground = new Ground(map.generateNext(ground2).createPlatform(world));
+            System.out.println("Ground xPos: " + ground.getPosition().x + "Ground Height: " + ground.getHeight() + "Ground width: " + ground.getWidth());
+            ground2 = new Ground(map.generateNext(ground).createPlatform(world));
+            System.out.println("Ground xPos: " + ground2.getPosition().x + "Ground Height: " + ground2.getHeight() + "Ground width: " + ground2.getWidth());
+        }
+    }
+
+
+
     private void updateGround(){
         if(isActorOffScreen(grounds.get(0))) {
             grounds.remove(0).remove();
