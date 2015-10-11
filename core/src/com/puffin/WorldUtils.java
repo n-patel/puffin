@@ -20,13 +20,7 @@ public class WorldUtils {
     public static World createWorld() {
         return new World(Constants.WORLD_GRAVITY, true);
     }
-
-    /**
-     * Creates a Ground body on the World passed in. Body is of type KinematicBody,
-     * and has density, height, width, x and y coordinates and speed from Constants file
-     * @param world The world on which the body is created
-     * @return Body Ground body
-     */
+/*
     public static Body createGround(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(new Vector2(Constants.GROUND_X, Constants.GROUND_Y));
@@ -41,6 +35,7 @@ public class WorldUtils {
         shape.dispose();
         return body;
     }
+*/
 
     /**
      * Creates a Runner body on the world passed in. Body is of type DynamicBody,
