@@ -14,7 +14,7 @@ public class Constants {
     public static final float GROUND_WIDTH   = 50.0f;
     public static final float GROUND_HEIGHT  = 2.0f;
     public static final float GROUND_DENSITY = 0.0f;
-    public static final Vector2 GROUND_SPEED = new Vector2(-7f, 0f);
+    public static final Vector2 GROUND_SPEED = new Vector2(-10f, 0f);
 
     public static final float RUNNER_X             = 2.5f;
     public static final float RUNNER_Y             = GROUND_Y + GROUND_HEIGHT;
