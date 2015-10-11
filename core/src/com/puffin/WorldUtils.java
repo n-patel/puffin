@@ -51,8 +51,7 @@ public class WorldUtils {
     public static Body createProjectile(World world, Runner runner) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.KinematicBody;
-        bodyDef.position.set(runner.body.getPosition().add(new Vector2(Constants.RUNNER_WIDTH/2, Constants.RUNNER_HEIGHT/2)));
-        bodyDef.position.set(new Vector2(runner.body.getPosition()));
+        bodyDef.position.set(runner.body.getPosition().add(new Vector2(Constants.RUNNER_WIDTH, Constants.RUNNER_HEIGHT/2)));
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(Constants.PROJECTILE_WIDTH / 2, Constants.PROJECTILE_HEIGHT / 2);
         Body body = world.createBody(bodyDef);
