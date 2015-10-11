@@ -17,6 +17,7 @@ public class WorldUtils {
         return new World(Constants.WORLD_GRAVITY, true);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 <<<<<<< HEAD
     /*
@@ -25,6 +26,10 @@ public class WorldUtils {
 =======
 /*
 >>>>>>> Programmatically generate platforms
+=======
+
+    /*
+>>>>>>> Implemented createProjectile
     public static Body createGround(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(new Vector2(Constants.GROUND_X, Constants.GROUND_Y));
