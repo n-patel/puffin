@@ -18,7 +18,7 @@ public class Maps {
     }
 
     public Ground next(World world) {
-        return new Ground(world, (1 / 2) * Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT* .15f, n++ * 1.15f*Constants.VIEWPORT_WIDTH);
+        return new Ground(world, (1 / 2) * Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT* .15f, (n++ * 1.15f -.3f)*Constants.VIEWPORT_WIDTH);
     }
 
     /**

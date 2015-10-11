@@ -79,10 +79,9 @@ public class GameStage extends Stage implements ContactListener{
      * Adds ground field to actor list
      */
     private void setUpGround() {
-        testGround();
         grounds = new ArrayList<Ground>();
         map = new Maps();
-        testGround();
+        //testGround();
         for(int i = 0; i < 10; i ++) {
             Ground ground = map.next(world);
             addActor(ground);
