@@ -31,3 +31,4 @@ public class Constants {
     public static final int VIEWPORT_WIDTH  = 20;
     public static final int VIEWPORT_HEIGHT = 13;
 }
+
