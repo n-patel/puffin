@@ -9,6 +9,10 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.puffin.WorldUtils;
 import com.puffin.BodyUtils;
+
+/**
+ * Controls all functionality related to the stage of the game
+ */
 public class GameStage extends Stage implements ContactListener{
 
     private World world;
@@ -31,6 +35,12 @@ public class GameStage extends Stage implements ContactListener{
 
     }
 
+    /**
+     * Creates the world with:
+     * world field is given the set gravity
+     * ground is set up with setUpGround()
+     * runner is set up with setUpRunner()
+     */
     private void setUpWorld() {
         world = WorldUtils.createWorld();
         world.setContactListener(this);
@@ -38,6 +48,10 @@ public class GameStage extends Stage implements ContactListener{
         setUpRunner();
     }
 
+    /**
+     * Sets ground field to new body with fields specified in WorldUtils file.
+     * Adds ground field to actor list
+     */
     private void setUpGround() {
         grounds = new Ground[Maps.platforms.length];
         for(int i = 0; i < Maps.platforms.length; i++) {
@@ -47,11 +61,18 @@ public class GameStage extends Stage implements ContactListener{
         }
     }
 
+    /**
+     * Sets runner field to new body with fields specified in WorldUtils file.
+     * Adds runner field to actor list
+     */
     private void setUpRunner() {
         runner = new Runner(WorldUtils.createRunner(world));
         addActor(runner);
     }
 
+    /**
+     * Sets up new Orthographic camera and updates
+     */
     private void setupCamera() {
         camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f);
@@ -87,7 +108,14 @@ public class GameStage extends Stage implements ContactListener{
         renderer.render(world, camera.combined);
     }
 
-
+    /**
+     * If screen is touched on the left side then calls jump in runner field
+     * @param x x integer coordinate of user's touch
+     * @param y y integer coordinate of user's touch
+     * @param pointer Not sure what this does
+     * @param button Not sure what this does
+     * @return boolean calls super function
+     */
     @Override
     public boolean touchDown(int x, int y, int pointer, int button) {
 
@@ -119,8 +147,8 @@ public class GameStage extends Stage implements ContactListener{
                 (BodyUtils.bodyIsGround(a) && BodyUtils.bodyIsRunner(b))) {
             runner.landed();
         }
-
     }
+
     @Override
     public void endContact(Contact contact) {
 
