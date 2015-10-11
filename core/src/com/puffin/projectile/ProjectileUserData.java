@@ -21,6 +21,6 @@ public class ProjectileUserData extends UserData {
 
     public Sprite getSprite(){
         i++;
-        return img[(i / 10) % img.length];
+        return img[(i / 5) % img.length];
     }
 }
