@@ -24,5 +24,10 @@ public class Constants {
 
     public static final float RUNNER_GRAVITY_SCALE = 3f;
     public static final Vector2 RUNNER_JUMPING_LINEAR_IMPULSE = new Vector2(0, 12f);
+    
+    public static final float PROJECTILE_SPEED = 2f;      //sets the projectile speed constant
+    public static final float PROJECTILE_WIDTH = .6f;
+    public static final float PROJECTILE_HEIGHT = .6f;
+
 
 }
