@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.puffin.WorldUtils;
 import com.puffin.BodyUtils;
@@ -59,13 +60,38 @@ public class GameStage extends Stage implements ContactListener{
      */
     private void setUpGround() {
         grounds = new Ground[Maps.platforms.length];
+
         for(int i = 0; i < Maps.platforms.length; i++) {
             Ground ground = new Ground(Maps.platforms[i].createPlatform(world));
             addActor(ground);
             grounds[i] = ground;
         }
     }
+    /**
+     * Adds new ground
+     */
+    private void updateGround(){
+        if (grounds[1].body.getPosition().x < -Constants.GROUND_WIDTH) {
+            for (int i = 0; i < grounds.length - 1; i++) {
+                grounds[i] = grounds[i + 1];
+                Maps.platforms[i] = Maps.platforms[i + 1];
 
+            }
+            Maps.platforms[Maps.platforms.length - 1] = new Platform(1, Maps.platforms[Maps.platforms.length - 2].xPos + 1.5f);
+            Ground ground = new Ground(Maps.platforms[Maps.platforms.length - 1].createPlatform(world));
+            addActor(ground);
+
+            grounds[grounds.length - 1] = ground;
+        }
+
+        for(Actor actor : this.getActors())
+        {
+            Vector3 windowCoordinates = new Vector3(actor.getX(), actor.getY(), 0);
+            camera.project(windowCoordinates);
+            if(windowCoordinates.x + actor.getWidth() < 0)
+                actor.remove();
+        }
+    }
     /**
      * Sets runner field to new body with fields specified in WorldUtils file.
      * Adds runner field to actor list
@@ -114,7 +140,7 @@ public class GameStage extends Stage implements ContactListener{
             world.step(TIME_STEP, 6, 2);
             accumulator -= TIME_STEP;
         }
-
+        updateGround();
         //TODO: Implement interpolation
 
     }

@@ -12,7 +12,7 @@ import com.badlogic.gdx.physics.box2d.World;
 public class Platform {
     private float width;
     private float height;
-    private float xPos;
+    public float xPos;
 
     public Platform(float width, float xPos){
         this.width = width / 2 * Constants.VIEWPORT_WIDTH;
