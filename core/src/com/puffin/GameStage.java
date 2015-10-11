@@ -72,8 +72,8 @@ public class GameStage extends Stage implements ContactListener{
         addActor(runner);
     }
 
-    private void setUpProjectile() {
-        Projectile projectile = new Projectile(WorldUtils.createProjectile(world, runner), runner);
+    private void setUpProjectile(float x, float y) {
+        Projectile projectile = new Projectile(WorldUtils.createProjectile(world, runner), x, y, runner);
         addActor(projectile);
         projectile.body.setLinearVelocity(projectile.linear_velocity.scl(Constants.PROJECTILE_SPEED));
     }
@@ -138,7 +138,7 @@ public class GameStage extends Stage implements ContactListener{
 
         if (rightSideTouched(touchPoint.x, touchPoint.y))
         {
-            setUpProjectile();
+            setUpProjectile(touchPoint.x, touchPoint.y);
         }
         return super.touchDown(x, y, pointer, button);
     }
