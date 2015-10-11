@@ -19,6 +19,7 @@ public class Platform {
         this.width  = width / 2 * Constants.VIEWPORT_WIDTH;
         this.height = height * Constants.VIEWPORT_HEIGHT;
         this.xPos   = xPos * Constants.VIEWPORT_WIDTH;
+        System.out.println(this.xPos + " " + this.height + " " + this.width);
     }
 
     /**
@@ -29,13 +30,13 @@ public class Platform {
      */
     public Body createPlatform(World world) {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(new Vector2(xPos + width, com.puffin.util.Constants.GROUND_Y));
+        bodyDef.position.set(new Vector2(xPos, 0));
         bodyDef.type = BodyDef.BodyType.KinematicBody;
         Body body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(this.width, this.height);
-        body.createFixture(shape, com.puffin.util.Constants.GROUND_DENSITY).setFriction(0f);
-        body.setLinearVelocity(com.puffin.util.Constants.GROUND_SPEED);
+        body.createFixture(shape, Constants.GROUND_DENSITY).setFriction(0f);
+        body.setLinearVelocity(Constants.GROUND_SPEED);
         body.setUserData(new GroundUserData());
         shape.dispose();
         return body;
