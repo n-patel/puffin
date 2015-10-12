@@ -233,11 +233,20 @@ public class GameStage extends Stage implements ContactListener{
         Sprite runnerSprite = runner.getUserData().getSprite(runner.isJumping());
         runnerSprite.setPosition(runner.getPosition().x / Constants.VIEWPORT_WIDTH * Gdx.graphics.getWidth() - runnerSprite.getWidth() / 2,
                 (runner.getPosition().y - Constants.RUNNER_HEIGHT / 2) / Constants.VIEWPORT_HEIGHT * Gdx.graphics.getHeight());
-
         //runnerSprite.setOrigin(runnerSprite.getX(), runnerSprite.getY());
         //runnerSprite.setScale(.5f, .5f);
         runnerSprite.setSize(200, 200);
         runnerSprite.draw(sb);
+
+        // draw platform sprites
+        for (Ground g: grounds) {
+            Sprite groundSprite = g.getUserData().getSprite();
+            groundSprite.setPosition(g.getPosition().x / Constants.VIEWPORT_WIDTH * Gdx.graphics.getWidth() - groundSprite.getWidth() / 2,
+                    (g.getPosition().y) / Constants.VIEWPORT_HEIGHT * Gdx.graphics.getHeight() - groundSprite.getHeight() / 2);
+            groundSprite.setSize(g.getWidth()/ Constants.VIEWPORT_WIDTH * Gdx.graphics.getWidth(),
+                    g.getHeight()/ Constants.VIEWPORT_HEIGHT * Gdx.graphics.getHeight());
+            groundSprite.draw(sb);
+        }
 
         for (Projectile p: projs) {
             Sprite projSprite = p.getUserData().getSprite();
