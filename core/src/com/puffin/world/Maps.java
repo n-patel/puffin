@@ -25,10 +25,11 @@ public class Maps {
         }
         else {
 
-            Ground lastGround = GameStage.getGrounds().get(GameStage.getGrounds().size() - 1);
-            System.out.println(lastGround.xPos);
+            //Ground lastGround = GameStage.getGrounds().get(GameStage.getGrounds().size() - 1);
+           // System.out.println(lastGround.xPos + " REAL " + lastGround.getX());
 
-            return new Ground(world, Constants.GROUND_WIDTH, Constants.GROUND_HEIGHT, lastGround.xPos + lastGround.width + Constants.MINIMUM_GAP);
+
+            return new Ground(world, Constants.GROUND_WIDTH, Constants.GROUND_HEIGHT, Constants.VIEWPORT_WIDTH);
         }
     }
 
