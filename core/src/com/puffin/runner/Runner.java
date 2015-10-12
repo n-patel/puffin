@@ -9,6 +9,7 @@ import com.puffin.util.GameActor;
  */
 public class Runner extends GameActor {
     private boolean jumping;
+    private boolean dblJump;
 
     /**
      * Creates a new Runner object. By default the runner is landed, or not jumping
@@ -28,8 +29,11 @@ public class Runner extends GameActor {
      *  false, iff jumping field is false (runner is not currently jumping)
      */
     public void jump() {
-        if (!jumping) {
+        if (!jumping) { // CHANGE TO dblJump FOR DOUBLE JUMP CAPABILITIES
             body.applyLinearImpulse(getUserData().getJumpingLinearImpulse(), body.getWorldCenter(), true);
+            if(jumping){
+                dblJump = true;
+            }
             jumping = true;
         }
     }
@@ -46,5 +50,6 @@ public class Runner extends GameActor {
      */
     public void landed() {
         jumping = false;
+        dblJump = false;
     }
 }
