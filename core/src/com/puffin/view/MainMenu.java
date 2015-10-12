@@ -18,7 +18,6 @@ public class MainMenu implements Screen {
     private Game game;
     private SpriteBatch spriteBatch;
     private Sprite splashScreen;
-    private Sprite wasted;
     private BitmapFont font;
 
     public MainMenu(Game game) {
@@ -30,7 +29,6 @@ public class MainMenu implements Screen {
         spriteBatch = new SpriteBatch();
         font = new BitmapFont();
         splashScreen = new Sprite(new Texture("background1.png"));
-        wasted = new Sprite(new Texture("wasted.gif"));
     }
 
     @Override
@@ -39,7 +37,6 @@ public class MainMenu implements Screen {
         spriteBatch.begin();
         splashScreen.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         splashScreen.draw(spriteBatch);
-        //wasted.draw(spriteBatch);
         font.draw(spriteBatch, "Dank Puffin Game", Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 4);
         font.getData().setScale(5, 5);
         spriteBatch.end();

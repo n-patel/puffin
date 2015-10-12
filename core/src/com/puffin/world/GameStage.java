@@ -45,6 +45,8 @@ public class GameStage extends Stage implements ContactListener{
     private Box2DDebugRenderer renderer;
     private SpriteBatch sb;
     private Sprite background;
+    private Sprite wasted;
+    private Sprite wastedGray;
 
     private Rectangle screenLeftSide;
     private Rectangle screenRightSide;
@@ -58,6 +60,8 @@ public class GameStage extends Stage implements ContactListener{
         renderer = new Box2DDebugRenderer();
         sb = new SpriteBatch();
         background = new Sprite(new Texture("background1.png"));
+        wasted = new Sprite(new Texture("wasted.gif"));
+        wastedGray = new Sprite(new Texture("stage.png"));
     }
 
     /**
@@ -159,7 +163,8 @@ public class GameStage extends Stage implements ContactListener{
     }
 
     private boolean isActorOffScreen(GameActor actor) {
-        return actor.getPosition().x + actor.getWidth() / 2 < 0;
+        return actor.getPosition().x + actor.getWidth() / 2 < 0 ||
+                actor.getPosition().y + actor.getHeight() < actor.getHeight() / 2;
 //        Vector3 windowCoordinates = new Vector3(actor.getX(), actor.getY(), 0);
 //        camera.project(windowCoordinates);
 //        return windowCoordinates.x + actor.getWidth() < 0;
@@ -256,8 +261,13 @@ public class GameStage extends Stage implements ContactListener{
             projSprite.setRotation(p.getRotation() + p.getVectorTouch().angle());
             projSprite.draw(sb);
         }
-
-
+        if(isActorOffScreen(runner)) {
+            wastedGray.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            //wastedGray.setAlpha(.9f);
+            wastedGray.draw(sb);
+            wasted.setPosition(Gdx.graphics.getWidth() / 4, 0);
+            wasted.draw(sb);
+        }
         sb.end();
         renderer.render(world, camera.combined);
     }
