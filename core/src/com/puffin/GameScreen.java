@@ -1,16 +1,20 @@
 package com.puffin;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.puffin.view.GameOverMenu;
 import com.puffin.world.GameStage;
 
 
 public class GameScreen implements Screen {
+    private Game game;
     private GameStage stage;
 
-    public GameScreen() {
-        stage = new GameStage();
+    public GameScreen(Game game) {
+        this.game = game;
+        stage = new GameStage(game);
     }
 
     @Override

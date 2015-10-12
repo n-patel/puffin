@@ -1,5 +1,6 @@
 package com.puffin.world;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,12 +16,15 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.puffin.GameScreen;
 import com.puffin.projectile.Projectile;
 import com.puffin.runner.Runner;
 import com.puffin.util.BodyUtils;
 import com.puffin.util.Constants;
 import com.puffin.util.GameActor;
 import com.puffin.util.WorldUtils;
+import com.puffin.view.GameOverMenu;
+
 import java.util.ArrayList;
 
 /**
@@ -28,6 +32,8 @@ import java.util.ArrayList;
  */
 
 public class GameStage extends Stage implements ContactListener{
+
+    private Game game;
 
     private World world;
     private static ArrayList<Ground> grounds;
@@ -53,7 +59,8 @@ public class GameStage extends Stage implements ContactListener{
 
     private Vector3 touchPoint;
 
-    public GameStage() {
+    public GameStage(Game game) {
+        this.game = game;
         setUpWorld();
         setupCamera();
         setupTouchControlAreas();
@@ -164,7 +171,7 @@ public class GameStage extends Stage implements ContactListener{
 
     private boolean isActorOffScreen(GameActor actor) {
         return actor.getPosition().x + actor.getWidth() / 2 < 0 ||
-                actor.getPosition().y + actor.getHeight() < actor.getHeight() / 2;
+                actor.getPosition().y + actor.getHeight() < -actor.getHeight();
 //        Vector3 windowCoordinates = new Vector3(actor.getX(), actor.getY(), 0);
 //        camera.project(windowCoordinates);
 //        return windowCoordinates.x + actor.getWidth() < 0;
@@ -222,6 +229,10 @@ public class GameStage extends Stage implements ContactListener{
         updateGround();
         //TODO: Implement interpolation
 
+
+        if(isActorOffScreen(runner)) {
+            game.setScreen(new GameOverMenu(game));
+        }
     }
 
     @Override
