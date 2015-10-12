@@ -30,7 +30,7 @@ public class MainMenu implements Screen {
         spriteBatch = new SpriteBatch();
         font = new BitmapFont();
         splashScreen = new Sprite(new Texture("background1.png"));
-        wasted = new Sprite(new Texture("wasted.gif"));
+        wasted = new Sprite(new Texture("background1.png"));
     }
 
     @Override

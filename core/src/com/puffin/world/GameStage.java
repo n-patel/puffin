@@ -116,16 +116,27 @@ public class GameStage extends Stage implements ContactListener{
 //    }
 
     private void updateGround(){
-        System.out.println(grounds.size());
+        //System.out.println(runner.getBody().getLinearVelocity().y);
         if(grounds.size() != 0 ) {
 
             Ground last = grounds.get(grounds.size() - 1);
-            System.out.println("LAST.x: " + last.getBody().getPosition().x + " WIDTH: " + last.width);
-            if (Constants.VIEWPORT_WIDTH - last.getBody().getPosition().x - last.width >= Constants.MINIMUM_GAP) {
+
+            float delta_x = Constants.MINIMUM_GAP;
+            if ((last.getBody().getPosition().x - Constants.VIEWPORT_WIDTH) > 0 && (last.getBody().getPosition().x - Constants.VIEWPORT_WIDTH)<.2f)
+            {
+                delta_x = map.generateGap(last, runner);
+                //System.out.println("x_gap: " + delta_x);
+            }
+
+            float height = map.generateHeight(last, delta_x);
+
+
+            System.out.println("gap: " + (Constants.VIEWPORT_WIDTH - last.getBody().getPosition().x - last.width));
+            if ((Constants.VIEWPORT_WIDTH - last.getBody().getPosition().x - last.width) >= Constants.MINIMUM_GAP) {
                 Ground ground = map.next(world);
                 addActor(ground);
                 grounds.add(ground);
-                System.out.println("ADDED NEW: " + grounds.get(grounds.size()-1).getBody().getPosition().x);
+                //System.out.println("ADDED NEW: " + grounds.get(grounds.size()-1).getBody().getPosition().x);
 
             }
             if (isActorOffScreen(grounds.get(0))) {
