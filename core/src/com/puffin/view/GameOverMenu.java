@@ -25,7 +25,7 @@ public class GameOverMenu implements Screen {
     @Override
     public void show() {
         spriteBatch = new SpriteBatch();
-        splashScreen = new Sprite(new Texture("end-background.png"));
+        splashScreen = new Sprite(new Texture("background-end.png"));
     }
 
     @Override
@@ -37,7 +37,8 @@ public class GameOverMenu implements Screen {
         spriteBatch.end();
 
         if (Gdx.input.justTouched()) {
-            game.setScreen(new GameScreen());
+            this.dispose();
+            game.setScreen(new GameScreen(game));
         }
     }
 
@@ -63,6 +64,8 @@ public class GameOverMenu implements Screen {
 
     @Override
     public void dispose() {
+        spriteBatch.dispose();
+        splashScreen = null;
 
     }
 }
