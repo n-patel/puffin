@@ -63,11 +63,19 @@ public class MainMenu implements Screen {
 
     @Override
     public void hide() {
-
+        this.dispose();
     }
 
     @Override
     public void dispose() {
-
+        if (spriteBatch != null) {
+            spriteBatch.dispose();
+        }
+        spriteBatch = null;
+        if (font != null) {
+            font.dispose();
+        }
+        font = null;
+        splashScreen = null;
     }
 }

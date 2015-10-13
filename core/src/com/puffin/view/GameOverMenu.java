@@ -59,13 +59,15 @@ public class GameOverMenu implements Screen {
 
     @Override
     public void hide() {
-
+        this.dispose();
     }
 
     @Override
     public void dispose() {
-        spriteBatch.dispose();
+        if (spriteBatch != null) {
+            spriteBatch.dispose();
+        }
+        spriteBatch = null;
         splashScreen = null;
-
     }
 }
